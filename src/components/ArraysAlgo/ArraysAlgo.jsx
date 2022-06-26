@@ -14,7 +14,7 @@ export function ArraysAlgo() {
         padding: 20,
       }}
     >
-      <Typography>Arrays Algo</Typography>
+      <Typography>"Wrong" Arrays Algo</Typography>
       <TextField
         label="input"
         value={string}
@@ -32,8 +32,8 @@ export function ArraysAlgo() {
         margin="normal"
       />
       <Typography fontSize={12}>
-        All the computation issues discussed for string parsing apply to this
-        array parsing as well.
+        I initially misunderstood the requirement, but decided to leave this in
+        as well.
       </Typography>
     </Paper>
   );
