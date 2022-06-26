@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { months, years } from "./cred-card-form-constants";
+import { removeNonDigitChars, renderOptions } from "./cred-card-form-utils";
 
 export function CredCardForm() {
   const [cardNumber, setCardNumber] = useState("");
@@ -8,7 +10,7 @@ export function CredCardForm() {
   const [cvvCode, setCvvCode] = useState("");
 
   function handleCardNumberChange({ target: { value } }) {
-    const digits = value.replaceAll(/\D/g, "");
+    const digits = removeNonDigitChars(value);
     let spacedDigits = digits.replace(/.{4}/g, "$& ");
     if (spacedDigits.length > 19) {
       spacedDigits = spacedDigits.slice(0, 19);
@@ -17,7 +19,7 @@ export function CredCardForm() {
   }
 
   function handleCvvCodeChange({ target: { value } }) {
-    let digits = value.replace(/\D/g, "");
+    let digits = removeNonDigitChars(value);
     if (digits.length > 3) {
       digits = digits.slice(0, 3);
     }
@@ -29,6 +31,7 @@ export function CredCardForm() {
       style={{
         width: 400,
         backgroundColor: "lightcyan",
+        padding: 20,
       }}
     >
       <input
@@ -49,18 +52,7 @@ export function CredCardForm() {
         value={expirationMonth}
         onChange={(e) => setExpirationMonth(e.target.value)}
       >
-        <option value="01">01</option>
-        <option value="02">02</option>
-        <option value="03">03</option>
-        <option value="04">04</option>
-        <option value="05">05</option>
-        <option value="06">06</option>
-        <option value="07">07</option>
-        <option value="08">08</option>
-        <option value="09">09</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
+        {renderOptions(months)}
       </select>
       <select
         name="card-expiration-year"
@@ -68,15 +60,7 @@ export function CredCardForm() {
         value={expirationYear}
         onChange={(e) => setExpirationYear(e.target.value)}
       >
-        <option value="2022">2022</option>
-        <option value="2023">2023</option>
-        <option value="2024">2024</option>
-        <option value="2025">2025</option>
-        <option value="2026">2026</option>
-        <option value="2027">2027</option>
-        <option value="2028">2028</option>
-        <option value="2029">2029</option>
-        <option value="2030">2030</option>
+        {renderOptions(years)}
       </select>
       <input
         id="cvv-code-input"
