@@ -1,3 +1,12 @@
+import {
+  Button,
+  FormControl,
+  Grid,
+  InputLabel,
+  Paper,
+  Select,
+  TextField,
+} from "@mui/material";
 import React, { useState } from "react";
 import { months, years } from "./cred-card-form-constants";
 import { removeNonDigitChars, renderOptions } from "./cred-card-form-utils";
@@ -27,48 +36,88 @@ export function CredCardForm() {
   }
 
   return (
-    <form
-      style={{
-        width: 400,
-        backgroundColor: "lightcyan",
-        padding: 20,
-      }}
-    >
-      <input
-        id="card-number"
-        placeholder="XXXX XXXX XXXX XXXX"
-        value={cardNumber}
-        onChange={handleCardNumberChange}
-      />
-      <input
-        id="card-name"
-        placeholder="John Doe"
-        value={cardHolder}
-        onChange={(e) => setCardHolder(e.target.value)}
-      />
-      <select
-        name="card-expiration-month"
-        id="card-expiration-month-select"
-        value={expirationMonth}
-        onChange={(e) => setExpirationMonth(e.target.value)}
+    <form>
+      <Paper
+        elevation={5}
+        style={{
+          width: 400,
+          backgroundColor: "lightcyan",
+          padding: 20,
+        }}
       >
-        {renderOptions(months)}
-      </select>
-      <select
-        name="card-expiration-year"
-        id="card-expiration-year-select"
-        value={expirationYear}
-        onChange={(e) => setExpirationYear(e.target.value)}
-      >
-        {renderOptions(years)}
-      </select>
-      <input
-        id="cvv-code-input"
-        placeholder="XXX"
-        value={cvvCode}
-        onChange={handleCvvCodeChange}
-      />
-      <button>submit</button>
+        <Grid container columns={20} spacing={2}>
+          <Grid item xs={20}>
+            <TextField
+              required
+              label="Card Number"
+              id="card-number-input"
+              placeholder="XXXX XXXX XXXX XXXX"
+              value={cardNumber}
+              onChange={handleCardNumberChange}
+              fullWidth
+            />
+          </Grid>
+
+          <Grid item xs={20}>
+            <TextField
+              required
+              label="Card Holder"
+              id="card-holder-input"
+              placeholder="John Doe"
+              value={cardHolder}
+              onChange={(e) => setCardHolder(e.target.value)}
+              fullWidth
+            />
+          </Grid>
+
+          <Grid item xs={6}>
+            <FormControl fullWidth>
+              <InputLabel id="card-expiration-month-label">Month</InputLabel>
+              <Select
+                labelId="card-expiration-month-label"
+                id="card-expiration-month-simple-select"
+                value={expirationMonth}
+                label="Month"
+                onChange={(e) => setExpirationMonth(e.target.value)}
+              >
+                {renderOptions(months)}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={6}>
+            <FormControl fullWidth>
+              <InputLabel id="card-expiration-year-label">Year</InputLabel>
+              <Select
+                labelId="card-expiration-year-label"
+                id="card-expiration-year-simple-select"
+                value={expirationYear}
+                label="Year"
+                onChange={(e) => setExpirationYear(e.target.value)}
+              >
+                {renderOptions(years)}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={8}>
+            <TextField
+              required
+              id="cvv-code-input"
+              label="CVV"
+              placeholder="XXX"
+              value={cvvCode}
+              onChange={handleCvvCodeChange}
+            />
+          </Grid>
+
+          <Grid item xs={20}>
+            <Button variant="contained" fullWidth>
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
+      </Paper>
     </form>
   );
 }
