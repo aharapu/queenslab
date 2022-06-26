@@ -17,7 +17,7 @@ export function CredCardForm() {
   const [expirationMonth, setExpirationMonth] = useState("");
   const [expirationYear, setExpirationYear] = useState("");
   const [cvvCode, setCvvCode] = useState("");
-  const [errors, setErrors] = useState({ cvv: false });
+  const [errors, setErrors] = useState({ cvv: false, number: false });
 
   function handleCardNumberChange({ target: { value } }) {
     const digits = removeNonDigitChars(value);
@@ -39,12 +39,8 @@ export function CredCardForm() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    let isErrorFound = false;
-    if (cvvCode.length < 3) {
-      setErrors((errors) => ({ ...errors, cvv: true }));
-      isErrorFound = true;
-    }
-    if (isErrorFound) return;
+    const isValid = validateFields();
+    if (!isValid) return;
 
     const cardData = {
       number: parseInt(removeNonDigitChars(cardNumber), 10),
@@ -54,6 +50,22 @@ export function CredCardForm() {
       cvv: cvvCode,
     };
     console.log("submitting: ", cardData);
+  }
+
+  function validateFields() {
+    let isValid = true;
+
+    if (cvvCode.length < 3) {
+      setErrors((errors) => ({ ...errors, cvv: true }));
+      isValid = false;
+    }
+
+    if (removeNonDigitChars(cardNumber).length < 16) {
+      setErrors((errors) => ({ ...errors, number: true }));
+      isValid = false;
+    }
+
+    return isValid;
   }
 
   const hasErrors = Object.values(errors).some((v) => v === true);
@@ -77,6 +89,11 @@ export function CredCardForm() {
               placeholder="XXXX XXXX XXXX XXXX"
               value={cardNumber}
               onChange={handleCardNumberChange}
+              onFocus={() =>
+                setErrors((errors) => ({ ...errors, number: false }))
+              }
+              error={errors.number}
+              helperText={errors.number && "Enter 16-digit card number"}
               fullWidth
             />
           </Grid>
@@ -135,7 +152,7 @@ export function CredCardForm() {
               onChange={handleCvvCodeChange}
               onFocus={() => setErrors((errors) => ({ ...errors, cvv: false }))}
               error={errors.cvv}
-              helperText={errors.cvv && "Enter CVV code"}
+              helperText={errors.cvv && "Enter 3-digit CVV code"}
             />
           </Grid>
 
