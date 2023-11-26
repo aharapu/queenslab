@@ -19,9 +19,7 @@ function App() {
     <div className="main-page">
       <button
         onClick={() =>
-          callApi(
-            "https://queenslabharapu.netlify.app/.netlify/functions/test-function"
-          )
+          callApi("https://queenslabharapu.netlify.app/.netlify/functions/test")
         }
       >
         f1
