@@ -20,20 +20,22 @@ function App() {
       <button
         onClick={() =>
           callApi(
-            "https://js-wisdom.netlify.app/.netlify/functions/test-function"
+            "https://queenslabharapu.netlify.app/.netlify/functions/test-function"
           )
         }
       >
         f1
       </button>
       <button
-        onClick={() => callApi("https://js-wisdom.netlify.app/cat-api/3")}
+        onClick={() => callApi("https://queenslabharapu.netlify.app/cat-api/3")}
       >
         f2
       </button>
       <button
         onClick={() =>
-          callApi("https://js-wisdom.netlify.app/.netlify/functions/cat-api/5")
+          callApi(
+            "https://queenslabharapu.netlify.app/.netlify/functions/cat-api/5"
+          )
         }
       >
         f3
